@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
 class InventoryResponseTest {
-    @Test void responseCarriesStockAndPriceInformation() {
-        InventoryResponse response = new InventoryResponse("BOOK-1", 2, new BigDecimal("12.50"), "USD", true);
+    @Test
+    void responseCarriesStockAndPriceInformation() {
+        InventoryResponse response = new InventoryResponse(
+                "BOOK-1", 2, new BigDecimal("12.50"), "USD", true);
         assertThat(response.quantityAvailable()).isPositive();
         assertThat(response.priceAvailable()).isTrue();
     }

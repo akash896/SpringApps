@@ -1,22 +1,50 @@
-spring.application.name: inventory-service
-server.port: 8082
-clients.pricing.base-url: ${PRICING_SERVICE_URL:http://localhost:8083}
+spring:
+  application:
+    name: inventory-service
+
+server:
+  port: 8082
+
+clients:
+  pricing:
+    base-url: ${PRICING_SERVICE_URL:http://localhost:8083}
+
 management:
-  endpoints.web.exposure.include: health,info,metrics,prometheus
-  endpoint.health.show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
   metrics:
-    export.jmx.enabled: true
-    tags.application: ${spring.application.name}
+    export:
+      jmx:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+
 resilience4j:
-  circuitbreaker.instances.pricingService:
-    sliding-window-size: 10
-    failure-rate-threshold: 50
-    wait-duration-in-open-state: 10s
-  retry.instances.pricingService:
-    max-attempts: 3
-    wait-duration: 150ms
-  bulkhead.instances.pricingService.max-concurrent-calls: 15
-  ratelimiter.instances.pricingService:
-    limit-for-period: 75
-    limit-refresh-period: 1s
-    timeout-duration: 0
+  circuitbreaker:
+    instances:
+      pricingService:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+  retry:
+    instances:
+      pricingService:
+        max-attempts: 3
+        wait-duration: 150ms
+  thread-pool-bulkhead:
+    instances:
+      pricingService:
+        core-thread-pool-size: 4
+        max-thread-pool-size: 8
+        queue-capacity: 25
+  ratelimiter:
+    instances:
+      pricingService:
+        limit-for-period: 75
+        limit-refresh-period: 1s
+        timeout-duration: 0

@@ -8,6 +8,8 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -17,35 +19,67 @@ public class OrderService {
     private final RestClient inventoryClient;
     private final Counter acceptedOrders;
 
-    public OrderService(RestClient.Builder builder, MeterRegistry meterRegistry,
-                 @Value("${clients.inventory.base-url}") String inventoryUrl) {
+    public OrderService(
+            RestClient.Builder builder,
+            MeterRegistry meterRegistry,
+            @Value("${clients.inventory.base-url}") String inventoryUrl) {
         this.inventoryClient = builder.baseUrl(inventoryUrl).build();
-        this.acceptedOrders = Counter.builder("orders.accepted").description("Accepted order requests").register(meterRegistry);
+        this.acceptedOrders = Counter.builder("orders.accepted")
+                .description("Accepted order requests")
+                .register(meterRegistry);
     }
 
     @CircuitBreaker(name = "inventoryService", fallbackMethod = "inventoryFallback")
     @Retry(name = "inventoryService")
-    @Bulkhead(name = "inventoryService", type = Bulkhead.Type.SEMAPHORE)
+    @Bulkhead(name = "inventoryService", type = Bulkhead.Type.THREADPOOL)
     @RateLimiter(name = "inventoryService")
-    public OrderResponse create(CreateOrderRequest request) {
-        InventorySnapshot inventory = inventoryClient.get().uri("/api/inventory/{sku}", request.sku())
-                .retrieve().body(InventorySnapshot.class);
+    public CompletionStage<OrderResponse> create(CreateOrderRequest request) {
+        InventorySnapshot inventory = inventoryClient.get()
+                .uri("/api/inventory/{sku}", request.sku())
+                .retrieve()
+                .body(InventorySnapshot.class);
         if (inventory == null || !inventory.priceAvailable()) {
-            return rejected(request, "Price is temporarily unavailable");
+            return CompletableFuture.completedFuture(
+                    rejected(request, "Price is temporarily unavailable"));
         }
         if (inventory.quantityAvailable() < request.quantity()) {
-            return rejected(request, "Insufficient inventory");
+            return CompletableFuture.completedFuture(
+                    rejected(request, "Insufficient inventory"));
         }
         acceptedOrders.increment();
-        return new OrderResponse(UUID.randomUUID().toString(), request.sku(), request.quantity(),
-                inventory.unitPrice().multiply(BigDecimal.valueOf(request.quantity())), inventory.currency(), "ACCEPTED", "Order accepted");
+        return CompletableFuture.completedFuture(
+                new OrderResponse(
+                        UUID.randomUUID().toString(),
+                        request.sku(),
+                        request.quantity(),
+                        inventory.unitPrice().multiply(BigDecimal.valueOf(request.quantity())),
+                        inventory.currency(),
+                        "ACCEPTED",
+                        "Order accepted"));
     }
 
-    public OrderResponse inventoryFallback(CreateOrderRequest request, Throwable error) {
-        return new OrderResponse(null, request.sku(), request.quantity(), BigDecimal.ZERO, "USD", "PENDING", "Inventory is temporarily unavailable");
+    public CompletionStage<OrderResponse> inventoryFallback(
+            CreateOrderRequest request,
+            Throwable error) {
+        return CompletableFuture.completedFuture(
+                new OrderResponse(
+                        null,
+                        request.sku(),
+                        request.quantity(),
+                        BigDecimal.ZERO,
+                        "USD",
+                        "PENDING",
+                        "Inventory is temporarily unavailable"));
     }
 
     private OrderResponse rejected(CreateOrderRequest request, String message) {
-        return new OrderResponse(null, request.sku(), request.quantity(), BigDecimal.ZERO, "USD", "REJECTED", message);
+        return new OrderResponse(
+                null,
+                request.sku(),
+                request.quantity(),
+                BigDecimal.ZERO,
+                "USD",
+                "REJECTED",
+                message);
     }
 }

@@ -17,8 +17,11 @@ public class PricingController {
     @Bulkhead(name = "pricingApi", type = Bulkhead.Type.SEMAPHORE)
     @RateLimiter(name = "pricingApi")
     public QuoteResponse quote(@PathVariable String sku) {
-        if (sku.isBlank()) throw new IllegalArgumentException("sku must not be blank");
-        BigDecimal price = new BigDecimal(Math.abs(sku.hashCode() % 9000) + 1000).movePointLeft(2);
+        if (sku.isBlank()) {
+            throw new IllegalArgumentException("sku must not be blank");
+        }
+        BigDecimal price = new BigDecimal(Math.abs(sku.hashCode() % 9000) + 1000)
+                .movePointLeft(2);
         return new QuoteResponse(sku, price, "USD", true);
     }
 

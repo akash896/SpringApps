@@ -9,9 +9,13 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class PricingApplication {
-    public static void main(String[] args) { SpringApplication.run(PricingApplication.class, args); }
+    public static void main(String[] args) {
+        SpringApplication.run(PricingApplication.class, args);
+    }
 
     /** Publishes every Micrometer meter, including Resilience4j meters, as JMX MBeans. */
     @Bean
-    JmxMeterRegistry jmxMeterRegistry() { return new JmxMeterRegistry(JmxConfig.DEFAULT, Clock.SYSTEM); }
+    JmxMeterRegistry jmxMeterRegistry() {
+        return new JmxMeterRegistry(JmxConfig.DEFAULT, Clock.SYSTEM);
+    }
 }

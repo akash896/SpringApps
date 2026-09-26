@@ -10,7 +10,17 @@ import org.springframework.web.client.RestClient;
 
 @SpringBootApplication
 public class InventoryApplication {
-    public static void main(String[] args) { SpringApplication.run(InventoryApplication.class, args); }
-    @Bean JmxMeterRegistry jmxMeterRegistry() { return new JmxMeterRegistry(JmxConfig.DEFAULT, Clock.SYSTEM); }
-    @Bean RestClient.Builder restClientBuilder() { return RestClient.builder(); }
+    public static void main(String[] args) {
+        SpringApplication.run(InventoryApplication.class, args);
+    }
+
+    @Bean
+    JmxMeterRegistry jmxMeterRegistry() {
+        return new JmxMeterRegistry(JmxConfig.DEFAULT, Clock.SYSTEM);
+    }
+
+    @Bean
+    RestClient.Builder restClientBuilder() {
+        return RestClient.builder();
+    }
 }

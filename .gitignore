@@ -1,0 +1,24 @@
+# Maven / Java build output
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Runtime output
+logs/
+*.log
+*.pid
+.maven-cache/
+
+# IDE and OS files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Python test artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/

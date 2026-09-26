@@ -1,22 +1,50 @@
-spring.application.name: order-service
-server.port: 8081
-clients.inventory.base-url: ${INVENTORY_SERVICE_URL:http://localhost:8082}
+spring:
+  application:
+    name: order-service
+
+server:
+  port: 8081
+
+clients:
+  inventory:
+    base-url: ${INVENTORY_SERVICE_URL:http://localhost:8082}
+
 management:
-  endpoints.web.exposure.include: health,info,metrics,prometheus
-  endpoint.health.show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
   metrics:
-    export.jmx.enabled: true
-    tags.application: ${spring.application.name}
+    export:
+      jmx:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+
 resilience4j:
-  circuitbreaker.instances.inventoryService:
-    sliding-window-size: 10
-    failure-rate-threshold: 50
-    wait-duration-in-open-state: 10s
-  retry.instances.inventoryService:
-    max-attempts: 3
-    wait-duration: 150ms
-  bulkhead.instances.inventoryService.max-concurrent-calls: 15
-  ratelimiter.instances.inventoryService:
-    limit-for-period: 75
-    limit-refresh-period: 1s
-    timeout-duration: 0
+  circuitbreaker:
+    instances:
+      inventoryService:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+  retry:
+    instances:
+      inventoryService:
+        max-attempts: 3
+        wait-duration: 150ms
+  thread-pool-bulkhead:
+    instances:
+      inventoryService:
+        core-thread-pool-size: 4
+        max-thread-pool-size: 8
+        queue-capacity: 25
+  ratelimiter:
+    instances:
+      inventoryService:
+        limit-for-period: 75
+        limit-refresh-period: 1s
+        timeout-duration: 0

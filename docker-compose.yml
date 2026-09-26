@@ -1,16 +1,21 @@
 services:
   pricing-service:
     build: ./pricing-service
-    ports: ["8083:8083"]
+    ports:
+      - "8083:8083"
   inventory-service:
     build: ./inventory-service
-    ports: ["8082:8082"]
+    ports:
+      - "8082:8082"
     environment:
       PRICING_SERVICE_URL: http://pricing-service:8083
-    depends_on: [pricing-service]
+    depends_on:
+      - pricing-service
   order-service:
     build: ./order-service
-    ports: ["8081:8081"]
+    ports:
+      - "8081:8081"
     environment:
       INVENTORY_SERVICE_URL: http://inventory-service:8082
-    depends_on: [inventory-service]
+    depends_on:
+      - inventory-service
