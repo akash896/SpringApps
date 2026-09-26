@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: pricing-service
+server:
+  port: 8083
+management:
+  endpoints.web.exposure.include: health,info,metrics,prometheus
+  endpoint.health.show-details: always
+  metrics:
+    export:
+      jmx.enabled: true
+    tags.application: ${spring.application.name}
+resilience4j:
+  circuitbreaker.instances.pricingApi:
+    sliding-window-size: 10
+    failure-rate-threshold: 50
+    wait-duration-in-open-state: 10s
+  retry.instances.pricingApi:
+    max-attempts: 3
+    wait-duration: 100ms
+  bulkhead.instances.pricingApi:
+    max-concurrent-calls: 20
+  ratelimiter.instances.pricingApi:
+    limit-for-period: 100
+    limit-refresh-period: 1s
+    timeout-duration: 0
