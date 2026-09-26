@@ -22,3 +22,6 @@ To run the complete stack with Docker, use `docker compose up --build` from this
 
 For local Maven execution, run `./start.sh` or `sh start.sh`. It builds all services using the project-local Maven configuration, then starts them and writes output to `logs/`.
 Use `python3 loadTest.py` for continuous normal traffic and `python3 heavyLoadTest.py` for continuous high concurrency that exercises rate-limit and bulkhead metrics. Stop either generator with Ctrl-C.
+
+Kubernetes manifests for the three-cluster, four-replica-per-service topology
+are in [kubernetes/README.md](kubernetes/README.md).
