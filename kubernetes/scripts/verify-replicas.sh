@@ -30,10 +30,24 @@ check_cluster() {
       return 1
     fi
   done
+
+  dashboard_desired="$(kubectl --context "${context}" --namespace "${namespace}" \
+    get deployment hystrix-dashboard -o jsonpath='{.spec.replicas}')"
+  dashboard_available="$(kubectl --context "${context}" --namespace "${namespace}" \
+    get deployment hystrix-dashboard -o jsonpath='{.status.availableReplicas}')"
+  dashboard_available="${dashboard_available:-0}"
+
+  printf '  %-18s desired=%s available=%s expected=%s\n' \
+    "hystrix-dashboard" "${dashboard_desired}" "${dashboard_available}" "1"
+
+  if [ "${dashboard_desired}" -ne 1 ] || [ "${dashboard_available}" -ne 1 ]; then
+    echo "Replica verification failed for hystrix-dashboard in ${cluster_name}." >&2
+    return 1
+  fi
 }
 
 check_cluster cluster1 "$1" 2
 check_cluster cluster2 "$2" 1
 check_cluster cluster3 "$3" 1
 
-echo "Verified: each application has 4 ready replicas across cluster1, cluster2, and cluster3."
+echo "Verified: each application has 4 ready replicas across the clusters and each cluster has one dashboard."

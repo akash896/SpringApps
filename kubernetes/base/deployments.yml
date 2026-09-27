@@ -1,6 +1,56 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: hystrix-dashboard
+  labels:
+    app.kubernetes.io/name: hystrix-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hystrix-dashboard
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hystrix-dashboard
+    spec:
+      containers:
+        - name: hystrix-dashboard
+          image: hystrix-dashboard:1.0.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PRICING_SERVICE_URL
+              value: http://pricing-service:8083
+            - name: INVENTORY_SERVICE_URL
+              value: http://inventory-service:8082
+            - name: ORDER_SERVICE_URL
+              value: http://order-service:8081
+          ports:
+            - name: http
+              containerPort: 8090
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: pricing-service
   labels:
     app.kubernetes.io/name: pricing-service

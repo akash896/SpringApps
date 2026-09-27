@@ -19,3 +19,15 @@ services:
       INVENTORY_SERVICE_URL: http://inventory-service:8082
     depends_on:
       - inventory-service
+  hystrix-dashboard:
+    build: ./hystrix-dashboard
+    ports:
+      - "8090:8090"
+    environment:
+      PRICING_SERVICE_URL: http://pricing-service:8083
+      INVENTORY_SERVICE_URL: http://inventory-service:8082
+      ORDER_SERVICE_URL: http://order-service:8081
+    depends_on:
+      - pricing-service
+      - inventory-service
+      - order-service

@@ -8,5 +8,7 @@ resources:
   - services.yml
   - deployments.yml
 
-commonLabels:
-  app.kubernetes.io/part-of: resilience-demo
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/part-of: resilience-demo

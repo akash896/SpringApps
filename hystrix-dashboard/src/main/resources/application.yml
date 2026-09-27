@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: hystrix-dashboard
+
+server:
+  port: 8090
+
+dashboard:
+  services:
+    pricing-url: ${PRICING_SERVICE_URL:http://localhost:8083}
+    inventory-url: ${INVENTORY_SERVICE_URL:http://localhost:8082}
+    order-url: ${ORDER_SERVICE_URL:http://localhost:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

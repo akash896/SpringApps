@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# Builds and starts Pricing, Inventory, and Order services. Press Ctrl-C to stop all of them.
+# Builds and starts the demo services and Hystrix dashboard. Press Ctrl-C to stop all of them.
 set -eu
 
 script_dir="$(cd "$(dirname "$0")" && pwd)"
@@ -52,16 +52,19 @@ trap stop_services EXIT INT TERM
 build_service pricing-service
 build_service inventory-service
 build_service order-service
+build_service hystrix-dashboard
 
 # Start in dependency order. The Resilience4j fallbacks tolerate downstream
 # services that are still initializing.
 start_service pricing-service
 start_service inventory-service
 start_service order-service
+start_service hystrix-dashboard
 
 echo "Services are starting:"
-echo "  Order:     http://localhost:8081"
-echo "  Inventory: http://localhost:8082"
-echo "  Pricing:   http://localhost:8083"
+echo "  Order:             http://localhost:8081"
+echo "  Inventory:         http://localhost:8082"
+echo "  Pricing:           http://localhost:8083"
+echo "  Hystrix Dashboard: http://localhost:8090"
 echo "Use Ctrl-C to stop all services."
 wait ${pids}
