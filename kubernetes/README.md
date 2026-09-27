@@ -29,3 +29,23 @@ sh kubernetes/scripts/verify-replicas.sh <cluster1-context> <cluster2-context> <
 
 `verify-replicas.sh` succeeds only when every deployment has the configured
 number of available replicas: 2 in Cluster 1 and 1 in each of Clusters 2 and 3.
+
+## Local Kind test setup
+
+For an isolated local test, install Docker/Colima, `kubectl`, and `kind`, then
+run the following from the repository root:
+
+```sh
+sh kubernetes/scripts/local-kind-test.sh
+```
+
+The script creates local clusters named `cluster1`, `cluster2`, and `cluster3`,
+builds each application image locally, loads the images into every Kind cluster,
+applies the overlays, and verifies ready replicas. It never uses OCI or Oracle
+infrastructure. Remove the test clusters when they are no longer needed:
+
+```sh
+kind delete cluster --name cluster1
+kind delete cluster --name cluster2
+kind delete cluster --name cluster3
+```
