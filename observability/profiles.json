@@ -1,0 +1,464 @@
+{
+  "pricing-service": {
+    "portName": "jmx",
+    "registryTls": true,
+    "credentialsFile": "/run/metrics/jmx-credentials.json",
+    "components": [
+      {
+        "type": "circuitBreakers",
+        "name": "pricingApi",
+        "metrics": {
+          "successfulCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerCalls.application.pricing-service.kind.successful.name.pricingApi,type=timers",
+            "attribute": "Count"
+          },
+          "failedCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerCalls.application.pricing-service.kind.failed.name.pricingApi,type=timers",
+            "attribute": "Count"
+          },
+          "ignoredCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerCalls.application.pricing-service.kind.ignored.name.pricingApi,type=timers",
+            "attribute": "Count"
+          },
+          "notPermittedCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerNotPermittedCalls.application.pricing-service.kind.not_permitted.name.pricingApi,type=meters",
+            "attribute": "Count"
+          },
+          "failureRate": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerFailureRate.application.pricing-service.name.pricingApi,type=gauges",
+            "attribute": "Value"
+          },
+          "slowCallRate": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerSlowCallRate.application.pricing-service.name.pricingApi,type=gauges",
+            "attribute": "Value"
+          },
+          "durationCount": {
+            "objectName": "metrics:name=applicationResilienceCircuitDurationCount.application.pricing-service.name.pricingApi,type=meters",
+            "attribute": "Count"
+          },
+          "durationSumMillis": {
+            "objectName": "metrics:name=applicationResilienceCircuitDurationNanos.application.pricing-service.name.pricingApi,type=meters",
+            "attribute": "Count",
+            "scale": 0.000001
+          },
+          "rejectedCalls": {
+            "objectName": "metrics:name=applicationResilienceCircuitRejected.application.pricing-service.name.pricingApi,type=meters",
+            "attribute": "Count"
+          },
+          "timeoutCalls": {
+            "objectName": "metrics:name=applicationResilienceCircuitTimeouts.application.pricing-service.name.pricingApi,type=meters",
+            "attribute": "Count"
+          }
+        },
+        "states": {
+          "CLOSED": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.pricing-service.name.pricingApi.state.closed,type=gauges",
+            "attribute": "Value"
+          },
+          "OPEN": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.pricing-service.name.pricingApi.state.open,type=gauges",
+            "attribute": "Value"
+          },
+          "HALF_OPEN": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.pricing-service.name.pricingApi.state.half_open,type=gauges",
+            "attribute": "Value"
+          },
+          "DISABLED": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.pricing-service.name.pricingApi.state.disabled,type=gauges",
+            "attribute": "Value"
+          },
+          "FORCED_OPEN": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.pricing-service.name.pricingApi.state.forced_open,type=gauges",
+            "attribute": "Value"
+          },
+          "METRICS_ONLY": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.pricing-service.name.pricingApi.state.metrics_only,type=gauges",
+            "attribute": "Value"
+          }
+        }
+      },
+      {
+        "type": "retries",
+        "name": "pricingApi",
+        "metrics": {
+          "successfulWithoutRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.pricing-service.kind.successful_without_retry.name.pricingApi,type=meters",
+            "attribute": "Count"
+          },
+          "failedWithoutRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.pricing-service.kind.failed_without_retry.name.pricingApi,type=meters",
+            "attribute": "Count"
+          },
+          "successfulWithRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.pricing-service.kind.successful_with_retry.name.pricingApi,type=meters",
+            "attribute": "Count"
+          },
+          "failedWithRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.pricing-service.kind.failed_with_retry.name.pricingApi,type=meters",
+            "attribute": "Count"
+          }
+        }
+      },
+      {
+        "type": "rateLimiters",
+        "name": "pricingApi",
+        "metrics": {
+          "availablePermissions": {
+            "objectName": "metrics:name=resilience4jRatelimiterAvailablePermissions.application.pricing-service.name.pricingApi,type=gauges",
+            "attribute": "Value"
+          },
+          "waitingThreads": {
+            "objectName": "metrics:name=resilience4jRatelimiterWaiting_threads.application.pricing-service.name.pricingApi,type=gauges",
+            "attribute": "Value"
+          },
+          "rejectedCalls": {
+            "objectName": "metrics:name=applicationResilienceRatelimiterRejected.application.pricing-service.name.pricingApi,type=meters",
+            "attribute": "Count"
+          }
+        }
+      },
+      {
+        "type": "bulkheads",
+        "name": "pricingApi",
+        "metrics": {
+          "availableConcurrentCalls": {
+            "objectName": "metrics:name=resilience4jBulkheadAvailableConcurrentCalls.application.pricing-service.name.pricingApi,type=gauges",
+            "attribute": "Value"
+          },
+          "maxAllowedConcurrentCalls": {
+            "objectName": "metrics:name=resilience4jBulkheadMaxAllowedConcurrentCalls.application.pricing-service.name.pricingApi,type=gauges",
+            "attribute": "Value"
+          },
+          "rejectedCalls": {
+            "objectName": "metrics:name=applicationResilienceBulkheadRejected.application.pricing-service.name.pricingApi,type=meters",
+            "attribute": "Count"
+          }
+        }
+      }
+    ]
+  },
+  "inventory-service": {
+    "portName": "jmx",
+    "registryTls": true,
+    "credentialsFile": "/run/metrics/jmx-credentials.json",
+    "components": [
+      {
+        "type": "circuitBreakers",
+        "name": "pricingService",
+        "metrics": {
+          "successfulCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerCalls.application.inventory-service.kind.successful.name.pricingService,type=timers",
+            "attribute": "Count"
+          },
+          "failedCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerCalls.application.inventory-service.kind.failed.name.pricingService,type=timers",
+            "attribute": "Count"
+          },
+          "ignoredCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerCalls.application.inventory-service.kind.ignored.name.pricingService,type=timers",
+            "attribute": "Count"
+          },
+          "notPermittedCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerNotPermittedCalls.application.inventory-service.kind.not_permitted.name.pricingService,type=meters",
+            "attribute": "Count"
+          },
+          "failureRate": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerFailureRate.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "slowCallRate": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerSlowCallRate.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "durationCount": {
+            "objectName": "metrics:name=applicationResilienceCircuitDurationCount.application.inventory-service.name.pricingService,type=meters",
+            "attribute": "Count"
+          },
+          "durationSumMillis": {
+            "objectName": "metrics:name=applicationResilienceCircuitDurationNanos.application.inventory-service.name.pricingService,type=meters",
+            "attribute": "Count",
+            "scale": 0.000001
+          },
+          "rejectedCalls": {
+            "objectName": "metrics:name=applicationResilienceCircuitRejected.application.inventory-service.name.pricingService,type=meters",
+            "attribute": "Count"
+          },
+          "timeoutCalls": {
+            "objectName": "metrics:name=applicationResilienceCircuitTimeouts.application.inventory-service.name.pricingService,type=meters",
+            "attribute": "Count"
+          }
+        },
+        "states": {
+          "CLOSED": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.inventory-service.name.pricingService.state.closed,type=gauges",
+            "attribute": "Value"
+          },
+          "OPEN": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.inventory-service.name.pricingService.state.open,type=gauges",
+            "attribute": "Value"
+          },
+          "HALF_OPEN": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.inventory-service.name.pricingService.state.half_open,type=gauges",
+            "attribute": "Value"
+          },
+          "DISABLED": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.inventory-service.name.pricingService.state.disabled,type=gauges",
+            "attribute": "Value"
+          },
+          "FORCED_OPEN": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.inventory-service.name.pricingService.state.forced_open,type=gauges",
+            "attribute": "Value"
+          },
+          "METRICS_ONLY": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.inventory-service.name.pricingService.state.metrics_only,type=gauges",
+            "attribute": "Value"
+          }
+        }
+      },
+      {
+        "type": "retries",
+        "name": "pricingService",
+        "metrics": {
+          "successfulWithoutRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.inventory-service.kind.successful_without_retry.name.pricingService,type=meters",
+            "attribute": "Count"
+          },
+          "failedWithoutRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.inventory-service.kind.failed_without_retry.name.pricingService,type=meters",
+            "attribute": "Count"
+          },
+          "successfulWithRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.inventory-service.kind.successful_with_retry.name.pricingService,type=meters",
+            "attribute": "Count"
+          },
+          "failedWithRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.inventory-service.kind.failed_with_retry.name.pricingService,type=meters",
+            "attribute": "Count"
+          }
+        }
+      },
+      {
+        "type": "rateLimiters",
+        "name": "pricingService",
+        "metrics": {
+          "availablePermissions": {
+            "objectName": "metrics:name=resilience4jRatelimiterAvailablePermissions.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "waitingThreads": {
+            "objectName": "metrics:name=resilience4jRatelimiterWaiting_threads.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "rejectedCalls": {
+            "objectName": "metrics:name=applicationResilienceRatelimiterRejected.application.inventory-service.name.pricingService,type=meters",
+            "attribute": "Count"
+          }
+        }
+      },
+      {
+        "type": "threadPoolBulkheads",
+        "name": "pricingService",
+        "metrics": {
+          "coreThreadPoolSize": {
+            "objectName": "metrics:name=resilience4jBulkheadCoreThreadPoolSize.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "threadPoolSize": {
+            "objectName": "metrics:name=resilience4jBulkheadThreadPoolSize.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "maxThreadPoolSize": {
+            "objectName": "metrics:name=resilience4jBulkheadMaxThreadPoolSize.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "queueDepth": {
+            "objectName": "metrics:name=resilience4jBulkheadQueueDepth.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "queueCapacity": {
+            "objectName": "metrics:name=resilience4jBulkheadQueueCapacity.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "activeThreads": {
+            "objectName": "metrics:name=resilience4jBulkheadActiveThreadCount.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "remainingQueueCapacity": {
+            "objectName": "metrics:name=applicationResiliencePoolRemaining.application.inventory-service.name.pricingService,type=gauges",
+            "attribute": "Value"
+          },
+          "completedCalls": {
+            "objectName": "metrics:name=applicationResiliencePoolCompleted.application.inventory-service.name.pricingService,type=meters",
+            "attribute": "Count"
+          },
+          "rejectedCalls": {
+            "objectName": "metrics:name=applicationResiliencePoolRejected.application.inventory-service.name.pricingService,type=meters",
+            "attribute": "Count"
+          }
+        }
+      }
+    ]
+  },
+  "order-service": {
+    "portName": "jmx",
+    "registryTls": true,
+    "credentialsFile": "/run/metrics/jmx-credentials.json",
+    "components": [
+      {
+        "type": "circuitBreakers",
+        "name": "inventoryService",
+        "metrics": {
+          "successfulCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerCalls.application.order-service.kind.successful.name.inventoryService,type=timers",
+            "attribute": "Count"
+          },
+          "failedCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerCalls.application.order-service.kind.failed.name.inventoryService,type=timers",
+            "attribute": "Count"
+          },
+          "ignoredCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerCalls.application.order-service.kind.ignored.name.inventoryService,type=timers",
+            "attribute": "Count"
+          },
+          "notPermittedCalls": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerNotPermittedCalls.application.order-service.kind.not_permitted.name.inventoryService,type=meters",
+            "attribute": "Count"
+          },
+          "failureRate": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerFailureRate.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "slowCallRate": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerSlowCallRate.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "durationCount": {
+            "objectName": "metrics:name=applicationResilienceCircuitDurationCount.application.order-service.name.inventoryService,type=meters",
+            "attribute": "Count"
+          },
+          "durationSumMillis": {
+            "objectName": "metrics:name=applicationResilienceCircuitDurationNanos.application.order-service.name.inventoryService,type=meters",
+            "attribute": "Count",
+            "scale": 0.000001
+          },
+          "rejectedCalls": {
+            "objectName": "metrics:name=applicationResilienceCircuitRejected.application.order-service.name.inventoryService,type=meters",
+            "attribute": "Count"
+          },
+          "timeoutCalls": {
+            "objectName": "metrics:name=applicationResilienceCircuitTimeouts.application.order-service.name.inventoryService,type=meters",
+            "attribute": "Count"
+          }
+        },
+        "states": {
+          "CLOSED": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.order-service.name.inventoryService.state.closed,type=gauges",
+            "attribute": "Value"
+          },
+          "OPEN": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.order-service.name.inventoryService.state.open,type=gauges",
+            "attribute": "Value"
+          },
+          "HALF_OPEN": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.order-service.name.inventoryService.state.half_open,type=gauges",
+            "attribute": "Value"
+          },
+          "DISABLED": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.order-service.name.inventoryService.state.disabled,type=gauges",
+            "attribute": "Value"
+          },
+          "FORCED_OPEN": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.order-service.name.inventoryService.state.forced_open,type=gauges",
+            "attribute": "Value"
+          },
+          "METRICS_ONLY": {
+            "objectName": "metrics:name=resilience4jCircuitbreakerState.application.order-service.name.inventoryService.state.metrics_only,type=gauges",
+            "attribute": "Value"
+          }
+        }
+      },
+      {
+        "type": "retries",
+        "name": "inventoryService",
+        "metrics": {
+          "successfulWithoutRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.order-service.kind.successful_without_retry.name.inventoryService,type=meters",
+            "attribute": "Count"
+          },
+          "failedWithoutRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.order-service.kind.failed_without_retry.name.inventoryService,type=meters",
+            "attribute": "Count"
+          },
+          "successfulWithRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.order-service.kind.successful_with_retry.name.inventoryService,type=meters",
+            "attribute": "Count"
+          },
+          "failedWithRetry": {
+            "objectName": "metrics:name=resilience4jRetryCalls.application.order-service.kind.failed_with_retry.name.inventoryService,type=meters",
+            "attribute": "Count"
+          }
+        }
+      },
+      {
+        "type": "rateLimiters",
+        "name": "inventoryService",
+        "metrics": {
+          "availablePermissions": {
+            "objectName": "metrics:name=resilience4jRatelimiterAvailablePermissions.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "waitingThreads": {
+            "objectName": "metrics:name=resilience4jRatelimiterWaiting_threads.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "rejectedCalls": {
+            "objectName": "metrics:name=applicationResilienceRatelimiterRejected.application.order-service.name.inventoryService,type=meters",
+            "attribute": "Count"
+          }
+        }
+      },
+      {
+        "type": "threadPoolBulkheads",
+        "name": "inventoryService",
+        "metrics": {
+          "coreThreadPoolSize": {
+            "objectName": "metrics:name=resilience4jBulkheadCoreThreadPoolSize.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "threadPoolSize": {
+            "objectName": "metrics:name=resilience4jBulkheadThreadPoolSize.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "maxThreadPoolSize": {
+            "objectName": "metrics:name=resilience4jBulkheadMaxThreadPoolSize.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "queueDepth": {
+            "objectName": "metrics:name=resilience4jBulkheadQueueDepth.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "queueCapacity": {
+            "objectName": "metrics:name=resilience4jBulkheadQueueCapacity.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "activeThreads": {
+            "objectName": "metrics:name=resilience4jBulkheadActiveThreadCount.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "remainingQueueCapacity": {
+            "objectName": "metrics:name=applicationResiliencePoolRemaining.application.order-service.name.inventoryService,type=gauges",
+            "attribute": "Value"
+          },
+          "completedCalls": {
+            "objectName": "metrics:name=applicationResiliencePoolCompleted.application.order-service.name.inventoryService,type=meters",
+            "attribute": "Count"
+          },
+          "rejectedCalls": {
+            "objectName": "metrics:name=applicationResiliencePoolRejected.application.order-service.name.inventoryService,type=meters",
+            "attribute": "Count"
+          }
+        }
+      }
+    ]
+  }
+}

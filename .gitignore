@@ -22,3 +22,6 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+
+# Generated observability credentials and runtime artifacts
+observability/.runtime/

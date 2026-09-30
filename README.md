@@ -6,7 +6,7 @@ Three self-contained Spring Boot 3 / Java 17 Maven applications:
 2. `inventory-service` (8082) obtains a price through REST and supplies stock availability.
 3. `order-service` (8081) obtains inventory through REST and accepts or rejects orders.
 
-Each service uses Resilience4j circuit breaker, retry, bulkhead, and rate limiter patterns. Inventory and Order use thread-pool bulkheads; Pricing uses a semaphore bulkhead. Every service defines an active Micrometer `JmxMeterRegistry`, so Micrometer—including Resilience4j instrumentation—is emitted as JMX MBeans. Actuator metrics are also exposed.
+Each service uses Resilience4j circuit breaker, retry, bulkhead, and rate limiter patterns. Inventory and Order use thread-pool bulkheads; Pricing uses a semaphore bulkhead. Spring Boot auto-configures a Micrometer `JmxMeterRegistry` for each service, so Micrometer—including Resilience4j instrumentation—is emitted as JMX MBeans. Actuator metrics are also exposed.
 
 Start the services in dependency order in separate terminals:
 
@@ -25,3 +25,5 @@ Use `python3 loadTest.py` for continuous normal traffic and `python3 heavyLoadTe
 
 Kubernetes manifests for the three-cluster, four-replica-per-service topology
 are in [kubernetes/README.md](kubernetes/README.md).
+
+For the minimal JMX dashboard integration, see [observability/README.md](observability/README.md).

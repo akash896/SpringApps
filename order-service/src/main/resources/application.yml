@@ -17,14 +17,18 @@ management:
   endpoint:
     health:
       show-details: always
-  metrics:
-    export:
-      jmx:
+  jmx:
+    metrics:
+      export:
         enabled: true
+  metrics:
     tags:
       application: ${spring.application.name}
 
 resilience4j:
+  dashboard:
+    pollIntervalMillis: 500
+    browserPublishIntervalMillis: 750
   circuitbreaker:
     instances:
       inventoryService:
